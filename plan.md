@@ -17,48 +17,46 @@ The project is a basic RAG system that extracts questions and answers from a cha
 
 ### 1. Improve Question-Answer Extraction
 
-The current method of identifying questions is very basic. We can improve this by using a more sophisticated approach, such as a pre-trained NLP model, to identify question-answer pairs more accurately.
-
-**Our Plan:**
-
-*   Use a pre-trained question-answering model (like one from the Hugging Face Hub) to identify questions and their corresponding answers in the chat log.
+-   **Goal:** More accurately identify question-answer pairs from the chat log.
+-   **Method:** Use a pre-trained NLP model for question-answering to extract questions and their corresponding answers.
 
 ### 2. Implement Semantic Search
 
-Currently, the system checks for the exact answer text in the scraped web content. This is not very effective. We can significantly improve this by using semantic search.
-
-**Our Plan:**
-
-*   **Vectorize Documents:** We'll use a sentence transformer model to create vector embeddings of the scraped web content.
-*   **Vectorize Answers:** We'll do the same for the answers extracted from the chat.
-*   **Implement Similarity Search:** We'll use a vector store (like FAISS or Chroma) to perform a similarity search between the answer vectors and the web content vectors. This will allow us to find semantically similar content, even if the wording isn't an exact match.
+-   **Goal:** Find more relevant information from the scraped web content.
+-   **Method:**
+    -   Vectorize the scraped web content and the extracted answers using a sentence transformer model.
+    -   Use a vector store (e.g., FAISS, Chroma) to perform similarity searches.
 
 ### 3. Add a Generation Component
 
-A true RAG system doesn't just retrieve information; it generates an answer based on the retrieved context. We can add a language model to do this.
-
-**Our Plan:**
-
-*   **Integrate a Language Model:** We'll use a language model (like one from OpenAI or a local model) to generate a new, more comprehensive answer based on the original answer and the context retrieved from the web.
+-   **Goal:** Generate new, more comprehensive answers based on the retrieved context.
+-   **Method:** Integrate a large language model (LLM) to generate answers.
 
 ### 4. Refactor the Code
 
-We can improve the code's structure and organization to make it more modular and easier to maintain.
-
-**Our Plan:**
-
-*   **Create a `main.py`:** We'll create a main.py file to be the single entry point for the application.
-*   **Modularize Components:** We'll break down the existing classes into smaller, more focused modules.
-*   **Add a `config.py`:** We'll use a configuration file to manage settings like API keys and model names.
+-   **Goal:** Improve the project's structure and maintainability.
+-   **Method:**
+    -   Create a `main.py` as the single entry point.
+    -   Modularize the existing components.
+    -   Use a `config.py` for managing settings.
 
 ## Progress
 
 ### Step 1: Improve Question-Answer Extraction (Done)
 
 - [x] Update `question_answer_extractor.py` to use a pre-trained NLP model.
-- [x] Update `requirements.txt` with new dependencies.
 
-### Step 2: Implement Semantic Search (Up Next)
+### Step 2: Implement Semantic Search (Done)
 
-- [ ] Vectorize documents and answers.
-- [ ] Implement similarity search using a vector store.
+- [x] Vectorize documents and answers.
+- [x] Implement similarity search using a vector store.
+
+### Step 3: Add a Generation Component (Done)
+
+- [x] Integrate a large language model (LLM) to generate answers.
+
+### Step 4: Refactor the Code (In Progress)
+
+- [x] Create a `main.py` as the single entry point.
+- [x] Modularize the existing components.
+- [x] Use a `config.py` for managing settings.

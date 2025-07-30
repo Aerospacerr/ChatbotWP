@@ -21,9 +21,4 @@ class DataLoader:
         return [link for sublist in links for link in sublist]
 
 
-if __name__ == "__main__":
-    loader = DataLoader("/Users/emircan/Desktop/Case_Study/ChatbotWP/_chat.txt")
-    data = loader.load_data()
-    messages = loader.preprocess_data(data)
-    links = loader.extract_links(messages)
-    print("Extracted Links:", messages)
+

@@ -9,8 +9,9 @@ from langchain.prompts import PromptTemplate
 from langchain.chains import LLMChain
 
 class RAGSystem:
-    def __init__(self, chat_file, google_api_key):
-        self.loader = DataLoader(chat_file)
+
+    def __init__(self, chat_file_path, google_api_key):
+        self.loader = DataLoader(chat_file_path)
         self.scraper = WebScraper()
         self.extractor = QAExtractor()
         self.embedding_model = SentenceTransformer('all-MiniLM-L6-v2')
@@ -64,6 +65,9 @@ class RAGSystem:
 
         return verified_answers
 
+
+
+
 if __name__ == "__main__":
     # NOTE: You need to add your Google API key to a .env file or as an environment variable.
     # For example, you can create a .env file with the following content:
@@ -80,3 +84,4 @@ if __name__ == "__main__":
         if is_correct:
             print(f"Context: {context}")
             print(f"New Answer: {new_answer}")
+

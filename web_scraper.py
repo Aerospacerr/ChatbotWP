@@ -19,12 +19,4 @@ class WebScraper:
         return text
 
 
-if __name__ == "__main__":
-    scraper = WebScraper()
-    url = "example_url"
-    html_content = scraper.fetch_page(url)
-    if html_content:
-        text_content = scraper.scrape_content(html_content)
-        print("Fetched Content:", text_content)
-    else:
-        print("Failed to fetch the page.")
+

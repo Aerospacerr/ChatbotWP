@@ -17,14 +17,3 @@ class QAExtractor:
                     answers.append(result['answer'])
         return questions, answers
 
-if __name__ == "__main__":
-    extractor = QAExtractor()
-    sample_messages = [
-        "How are you?",
-        "I'm fine, thank you!",
-        "What is the capital of France?",
-        "Paris is the capital of France.",
-    ]
-    questions, answers = extractor.extract_qa(sample_messages)
-    print("Questions:", questions)
-    print("Answers:", answers)

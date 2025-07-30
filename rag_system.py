@@ -9,6 +9,7 @@ from langchain.prompts import PromptTemplate
 from langchain.chains import LLMChain
 
 class RAGSystem:
+
     def __init__(self, chat_file_path, google_api_key):
         self.loader = DataLoader(chat_file_path)
         self.scraper = WebScraper()
@@ -64,4 +65,23 @@ class RAGSystem:
 
         return verified_answers
 
+
+
+
+if __name__ == "__main__":
+    # NOTE: You need to add your Google API key to a .env file or as an environment variable.
+    # For example, you can create a .env file with the following content:
+    # GOOGLE_API_KEY="your-api-key"
+    from dotenv import load_dotenv
+    import os
+
+    load_dotenv()
+
+    rag_system = RAGSystem("/Users/emircan/Desktop/Case_Study/ChatbotWP/_chat.txt", os.getenv("GOOGLE_API_KEY"))
+    results = rag_system.verify_answers()
+    for answer, is_correct, context, new_answer in results:
+        print(f"Answer: {answer} | Correct: {is_correct}")
+        if is_correct:
+            print(f"Context: {context}")
+            print(f"New Answer: {new_answer}")
 

@@ -1,6 +1,5 @@
 requests
 beautifulsoup4
-openai
 pypdf
 langchain
 langchain-community
@@ -8,4 +7,5 @@ transformers
 torch
 sentence-transformers
 faiss-cpu
-openai
+langchain-google-genai
+python-dotenv

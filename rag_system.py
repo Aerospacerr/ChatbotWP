@@ -4,36 +4,26 @@ from question_answer_extractor import QAExtractor
 from sentence_transformers import SentenceTransformer
 import faiss
 import numpy as np
-import openai
+from langchain_google_genai import ChatGoogleGenerativeAI
+from langchain.prompts import PromptTemplate
+from langchain.chains import LLMChain
 
 class RAGSystem:
-    def __init__(self, chat_file, openai_api_key):
+    def __init__(self, chat_file, google_api_key):
         self.loader = DataLoader(chat_file)
         self.scraper = WebScraper()
         self.extractor = QAExtractor()
         self.embedding_model = SentenceTransformer('all-MiniLM-L6-v2')
-        self.openai_api_key = openai_api_key
-        openai.api_key = self.openai_api_key
+        self.llm = ChatGoogleGenerativeAI(model="gemini-pro", google_api_key=google_api_key)
 
     def generate_answer(self, question, original_answer, context):
-        prompt = f"""Given the following question, original answer, and context, generate a new, more comprehensive answer.
-
-        Question: {question}
-        Original Answer: {original_answer}
-        Context: {context}
-
-        New Answer:"""
-
-        response = openai.Completion.create(
-            engine="text-davinci-003",
-            prompt=prompt,
-            max_tokens=150,
-            n=1,
-            stop=None,
-            temperature=0.7,
+        prompt = PromptTemplate(
+            input_variables=["question", "original_answer", "context"],
+            template="""Given the following question, original answer, and context, generate a new, more comprehensive answer.\n\n        Question: {question}\n        Original Answer: {original_answer}\n        Context: {context}\n\n        New Answer:"""
         )
-
-        return response.choices[0].text.strip()
+        chain = LLMChain(llm=self.llm, prompt=prompt)
+        response = chain.run(question=question, original_answer=original_answer, context=context)
+        return response.strip()
 
     def verify_answers(self):
         # Load and preprocess chat data
@@ -75,15 +65,15 @@ class RAGSystem:
         return verified_answers
 
 if __name__ == "__main__":
-    # NOTE: You need to add your OpenAI API key to a .env file or as an environment variable.
+    # NOTE: You need to add your Google API key to a .env file or as an environment variable.
     # For example, you can create a .env file with the following content:
-    # OPENAI_API_KEY="your-api-key"
+    # GOOGLE_API_KEY="your-api-key"
     from dotenv import load_dotenv
     import os
 
     load_dotenv()
 
-    rag_system = RAGSystem("/Users/emircan/Desktop/Case_Study/ChatbotWP/_chat.txt", os.getenv("OPENAI_API_KEY"))
+    rag_system = RAGSystem("/Users/emircan/Desktop/Case_Study/ChatbotWP/_chat.txt", os.getenv("GOOGLE_API_KEY"))
     results = rag_system.verify_answers()
     for answer, is_correct, context, new_answer in results:
         print(f"Answer: {answer} | Correct: {is_correct}")

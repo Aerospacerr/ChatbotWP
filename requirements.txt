@@ -1,0 +1,6 @@
+requests
+beautifulsoup4
+openai
+pypdf
+langchain
+langchain-community
